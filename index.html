@@ -45,14 +45,22 @@ a:hover{color:var(--accent)}
 img,video{display:block;max-width:100%;height:auto}
 
 /* header */
-.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 24px;padding-block:24px;border-bottom:1px solid var(--line)}
-.top .name{font:600 17px/1 var(--display);text-decoration:none}
+/* Sticky. The name stays hidden while the hero's h1 is on screen, so it never shows twice. */
+.top{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:baseline;gap:8px 24px;padding-block:18px;border-bottom:1px solid var(--line);background:var(--bg)}
+@supports (backdrop-filter:blur(8px)) or (-webkit-backdrop-filter:blur(8px)){
+  .top{background:color-mix(in srgb,var(--bg) 85%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+}
+.top .name{font:600 17px/1 var(--display);text-decoration:none;opacity:0;pointer-events:none}
+.top.named .name,.top .name:focus-visible{opacity:1;pointer-events:auto}
+@media (prefers-reduced-motion:no-preference){.top .name{transition:opacity .2s}}
+@media (max-width:560px){.top .name{display:none}.top nav{margin-left:auto;gap:18px}}
+section[id]{scroll-margin-top:72px}
 .top nav{display:flex;gap:22px;font-size:15px}
 .top nav a{text-decoration:none;color:var(--muted)}
 .top nav a:hover{color:var(--ink)}
 
 /* intro */
-.intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(28px,5vw,64px);align-items:end;padding-block:clamp(48px,8vw,96px) clamp(40px,6vw,72px)}
+.intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(28px,5vw,64px);align-items:center;padding-block:clamp(48px,8vw,96px) clamp(40px,6vw,72px)}
 @media (max-width:860px){.intro{grid-template-columns:minmax(0,1fr)}}
 .intro h1{font:700 clamp(40px,6.2vw,68px)/1 var(--display);letter-spacing:-.025em;margin:0 0 24px;text-wrap:balance}
 .intro p{margin:0 0 16px;max-width:36ch;font-size:clamp(18px,1.9vw,20px)}
@@ -64,6 +72,18 @@ figcaption{font-size:14px;line-height:1.55;color:var(--muted);margin-top:10px;ma
 figcaption b{color:var(--ink);font-weight:500}
 .num{font-family:var(--mono);font-size:.92em;color:var(--ink)}
 .hero-fig img{width:100%;image-rendering:auto;border-radius:2px}
+/* fog sweep: the photo is the same in both themes, so the overlay and box colors are fixed */
+.fs-frame{position:relative;border-radius:3px;overflow:hidden;background:var(--wash)}
+.fs-frame img{border-radius:0}
+.fs-fog{position:absolute;inset:0;background:rgb(204,204,204);opacity:0;pointer-events:none}
+.fs-boxes{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.fs-gt{fill:none;stroke:#fff;stroke-opacity:.6;stroke-width:1}
+.fs-det{fill:none;stroke:#F0834A;stroke-width:2}
+.fs-det.fs-new{stroke-dasharray:7 5}
+.fs-bar{display:grid;gap:6px;margin-top:12px}
+.fs-read{font:400 14px/1.4 var(--mono);font-variant-numeric:tabular-nums;color:var(--ink)}
+.fs-bar input{width:100%;margin:0;accent-color:var(--accent);cursor:ew-resize}
+.fs-off .fs-bar{display:none}
 
 /* work */
 h2{font:600 15px/1.3 var(--sans);color:var(--muted);margin:0 0 8px;letter-spacing:.01em}
@@ -145,9 +165,17 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 20px;pa
           <li><a href="Christopher-Kuizon-Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a></li>
         </ul>
       </div>
-      <figure class="hero-fig">
-        <img src="assets/fog-pair.png" width="510" height="164" alt="The same street scene twice. Left, clear: nine labeled detection boxes. Right, with synthetic fog: two boxes remain.">
-        <figcaption><b>Same frame, same detector.</b> Clear: <span class="num">9</span> detections at confidence ≥ <span class="num">0.25</span>. With synthetic fog at severity <span class="num">0.60</span>: <span class="num">2</span>. From the Edge Perception Reliability Lab.</figcaption>
+      <figure class="hero-fig" id="fogsim">
+        <div class="fs-frame">
+          <img src="assets/hero-clean.jpg" width="600" height="375" alt="A street scene: a silver hatchback parked on the right, a woman in a blue top on the sidewalk, and cars further down the road.">
+          <div class="fs-fog"></div>
+          <svg class="fs-boxes" viewBox="0 0 600 375" preserveAspectRatio="none" aria-hidden="true"></svg>
+        </div>
+        <div class="fs-bar">
+          <output class="fs-read" for="fs-sev">severity 0.00 · 12 detections ≥ 0.25</output>
+          <input type="range" id="fs-sev" min="0" max="1" step="0.01" value="0" aria-label="Fog severity">
+        </div>
+        <figcaption><b>Same frame, same detector, more fog.</b> Clear: <span class="num">12</span> detections at confidence ≥ <span class="num">0.25</span>. At severity <span class="num">0.60</span>: <span class="num">6</span>. Dashed boxes weren't there in clear weather; thin outlines are the labeled objects. Fog and detector from the Edge Perception Reliability Lab. Frame: <a href="https://www.cvlibs.net/datasets/kitti/" target="_blank" rel="noopener">KITTI</a> (Geiger et al., CVPR 2012), cropped, <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank" rel="noopener">CC BY-NC-SA 3.0</a>.</figcaption>
       </figure>
     </section>
 
@@ -264,10 +292,104 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 20px;pa
     </section>
   </main>
 
-  <footer><span>Christopher Kuizon, 2026</span><span>Updated October 2026</span></footer>
+  <footer><span>Christopher Kuizon</span><span>Updated October 2026</span></footer>
 </div>
 
 <script>
+(function(){
+  var bar=document.querySelector(".top"),h1=document.querySelector(".intro h1");
+  if(!bar||!h1||!("IntersectionObserver" in window)){if(bar)bar.classList.add("named");return;}
+  new IntersectionObserver(function(es){bar.classList.toggle("named",!es[0].isIntersecting);},{rootMargin:"-60px 0px 0px 0px"}).observe(h1);
+})();
+/* Hero fog sweep. assets/hero.json holds the detector's output at 21 fog severities (0 to 1 in steps of 0.05).
+   The fog layer follows the lab's formula exactly: an rgb(204,204,204) layer at opacity 1 - t. Boxes and the
+   readout come from the nearest precomputed step, so nothing shown is interpolated except box positions. */
+(function(){
+  var fig=document.getElementById("fogsim");
+  if(!fig||!window.fetch)return;
+  var svg=fig.querySelector(".fs-boxes"),fog=fig.querySelector(".fs-fog"),range=fig.querySelector("input"),out=fig.querySelector("output");
+  var still=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var NS="http://www.w3.org/2000/svg",HALF=8000,RESUME_MS=2000;
+  fetch("assets/hero.json").then(function(r){if(!r.ok)throw new Error(r.status);return r.json();}).then(start)
+    .catch(function(){fig.classList.add("fs-off");});
+
+  function rect(cls){var el=document.createElementNS(NS,"rect");el.setAttribute("class",cls);el.setAttribute("vector-effect","non-scaling-stroke");return el;}
+  function place(el,b){el.setAttribute("x",b[0]);el.setAttribute("y",b[1]);el.setAttribute("width",b[2]-b[0]);el.setAttribute("height",b[3]-b[1]);}
+
+  function start(h){
+    var th=h.thresholds.outcome,steps=h.steps,n=steps.length-1;
+    svg.setAttribute("viewBox","0 0 "+h.image.width+" "+h.image.height);
+    h.ground_truth.forEach(function(g){var el=rect("fs-gt");place(el,g.box);svg.appendChild(el);});
+    var byStep=steps.map(function(st){var m={};st.detections.forEach(function(d){m[d.id]=d;});return m;});
+    var counts=steps.map(function(st){return st.detections.filter(function(d){return d.score>=th;}).length;});
+    var boxes={};
+    steps.forEach(function(st){st.detections.forEach(function(d){
+      if(!boxes[d.id]){boxes[d.id]={el:rect("fs-det"),op:0};boxes[d.id].el.style.display="none";svg.appendChild(boxes[d.id].el);}
+    });});
+
+    var s=still?0.6:0,phase=0,playing=!still,visible=true,over=false,down=false,raf=0,last=0,timer=0;
+    range.value=s;
+
+    function render(dt){
+      var x=s*n,lo=Math.floor(x),hi=Math.min(lo+1,n),f=x-lo,k=Math.round(x);
+      var t=steps[lo].transmission*(1-f)+steps[hi].transmission*f;
+      fog.style.opacity=1-t;
+      for(var id in boxes){
+        var bx=boxes[id],a=byStep[lo][id],b=byStep[hi][id],d=byStep[k][id];
+        var on=d&&d.score>=th?1:0;
+        bx.op=still?on:bx.op+(on-bx.op)*Math.min(1,dt/140);
+        if(bx.op<0.02){bx.el.style.display="none";continue;}
+        // A box still fading out may be in none of these steps; it then stays where it was last placed.
+        var src=a||b||d;
+        if(src)place(bx.el,a&&b?a.box.map(function(v,i){return v+(b.box[i]-v)*f;}):src.box);
+        bx.el.style.display="";
+        bx.el.style.opacity=bx.op;
+        if(d)bx.el.classList.toggle("fs-new",d.outcome==="introduced");
+      }
+      var text="severity "+steps[k].severity.toFixed(2)+" · "+counts[k]+" detections ≥ "+th;
+      if(out.textContent!==text){out.textContent=text;range.setAttribute("aria-valuetext",text);}
+    }
+
+    function frame(now){
+      if(!visible){raf=0;return;}
+      var dt=last?Math.min(now-last,100):16;last=now;
+      if(playing){
+        phase=(phase+dt/HALF)%2;
+        var u=phase<1?phase:2-phase;
+        s=(1-Math.cos(Math.PI*u))/2;
+        range.value=s;
+      }
+      render(dt);
+      raf=requestAnimationFrame(frame);
+    }
+    function kick(){if(!raf){last=0;raf=requestAnimationFrame(frame);}}
+
+    // Scrubbing pauses the loop; it resumes from the scrubbed severity, in the direction it was going.
+    function hold(){playing=false;clearTimeout(timer);kick();}
+    function release(){
+      clearTimeout(timer);
+      if(still||over||down)return;
+      timer=setTimeout(function(){
+        var u=Math.acos(1-2*s)/Math.PI;
+        phase=phase<1?u:2-u;playing=true;kick();
+      },RESUME_MS);
+    }
+    function fromPointer(e){var r=range.getBoundingClientRect();s=Math.min(1,Math.max(0,(e.clientX-r.left)/r.width));range.value=s;}
+    range.addEventListener("input",function(){s=+range.value;hold();release();});
+    range.addEventListener("pointerenter",function(e){if(e.pointerType==="mouse"){over=true;hold();}});
+    range.addEventListener("pointermove",function(e){if(e.pointerType==="mouse"&&!down){fromPointer(e);hold();}});
+    range.addEventListener("pointerleave",function(e){if(e.pointerType==="mouse"){over=false;release();}});
+    range.addEventListener("pointerdown",function(){down=true;hold();});
+    window.addEventListener("pointerup",function(){if(down){down=false;release();}});
+    window.addEventListener("pointercancel",function(){if(down){down=false;release();}});
+    range.addEventListener("keydown",function(){hold();release();});
+
+    if("IntersectionObserver" in window){
+      new IntersectionObserver(function(es){visible=es[0].isIntersecting;if(visible)kick();}).observe(fig);
+    }
+    kick();
+  }
+})();
 (function(){
   var v=document.getElementById("lda-video");
   var still=window.matchMedia("(prefers-reduced-motion: reduce)").matches;

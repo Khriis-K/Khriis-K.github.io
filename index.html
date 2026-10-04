@@ -53,7 +53,8 @@ img,video{display:block;max-width:100%;height:auto}
 .top .name{font:600 17px/1 var(--display);text-decoration:none;opacity:0;pointer-events:none}
 .top.named .name,.top .name:focus-visible{opacity:1;pointer-events:auto}
 @media (prefers-reduced-motion:no-preference){.top .name{transition:opacity .2s}}
-@media (max-width:560px){.top .name{display:none}.top nav{margin-left:auto;gap:18px}}
+.top .ini{display:none}
+@media (max-width:560px){.top .full{display:none}.top .ini{display:inline}.top nav{gap:18px}}
 section[id]{scroll-margin-top:72px}
 .top nav{display:flex;gap:22px;font-size:15px}
 .top nav a{text-decoration:none;color:var(--muted)}
@@ -148,7 +149,7 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 20px;pa
 <body>
 <div class="page">
   <header class="top">
-    <a class="name" href="#top">Christopher Kuizon</a>
+    <a class="name" href="#top" aria-label="Christopher Kuizon"><span class="full" aria-hidden="true">Christopher Kuizon</span><span class="ini" aria-hidden="true">CK</span></a>
     <nav aria-label="Primary"><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a><a href="Christopher-Kuizon-Resume.pdf" target="_blank" rel="noopener">Resume</a></nav>
   </header>
 

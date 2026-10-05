@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Christopher Kuizon · Portfolio (print)</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://khriis-k.github.io/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<!-- Source for Christopher-Kuizon-Portfolio.pdf. Rebuild with: python tools/build_portfolio_pdf.py
+     Copy mirrors index.html; keep the two in step. -->
+<style>
+:root{
+  --ink:#17191A; --muted:#5D615E; --line:#D2D3CB; --accent:#B8430C; --wash:#E6E6DF;
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@page{
+  size:letter; margin:.55in .6in .6in;
+  @bottom-left{content:"Christopher Kuizon · khriis-k.github.io";font:9px "IBM Plex Sans",sans-serif;color:#5D615E}
+  @bottom-right{content:counter(page) " / " counter(pages);font:9px "IBM Plex Mono",monospace;color:#5D615E}
+}
+*{box-sizing:border-box}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{margin:0;background:#fff;color:var(--ink);font:10.5px/1.55 var(--sans)}
+/* On screen, show it as a sheet so the file is readable if opened in a browser. */
+@media screen{
+  html{background:#E6E6DF}
+  body{max-width:8.5in;margin:24px auto;padding:.55in .6in;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+}
+a{color:inherit;text-decoration:none}
+.url{font-family:var(--mono);font-size:.92em;color:var(--accent)}
+img{display:block;max-width:100%;height:auto}
+.num{font-family:var(--mono);font-size:.92em}
+p{margin:0 0 7px}
+
+/* header */
+.head{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end;padding-bottom:12px;border-bottom:1.5px solid var(--ink)}
+h1{font:700 32px/1 var(--display);letter-spacing:-.025em;margin:0 0 8px}
+.lede{font-size:12.5px;max-width:58ch;margin:0 0 4px}
+.sub{color:var(--muted);margin:0}
+.web{border:1px solid var(--accent);border-radius:3px;padding:8px 11px;text-align:left;min-width:2.2in}
+.web small{display:block;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.web a{font:500 13px/1.2 var(--mono);color:var(--accent)}
+.web span{display:block;font-size:9.5px;color:var(--muted);margin-top:3px}
+.reach{display:flex;flex-wrap:wrap;gap:4px 18px;margin:8px 0 0;padding:0;list-style:none;font-size:10px}
+.reach b{font-weight:500;color:var(--muted);margin-right:5px}
+.reach a{font-family:var(--mono)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,2fr) minmax(0,1.15fr);gap:10px;align-items:end;margin:14px 0 0;break-inside:avoid}
+.pair{display:contents}
+.pair figure{margin:0}
+.pair img{border-radius:2px}
+.tag{font:400 9.5px/1.3 var(--mono);margin-top:4px}
+.tag b{font-weight:400;color:var(--accent)}
+figcaption,.cap{font-size:9.5px;line-height:1.5;color:var(--muted);margin-top:5px}
+.hero>figcaption{margin:0 0 17px}
+figcaption b,.cap b{color:var(--ink);font-weight:500}
+
+/* work */
+h2{font:600 10px/1.3 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 0 0;padding-bottom:5px;border-bottom:1px solid var(--line)}
+.project{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px;padding-block:11px;border-bottom:1px solid var(--line);break-inside:avoid}
+.project.textonly{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}
+h3{font:700 16px/1.15 var(--display);letter-spacing:-.01em;margin:0 0 2px}
+.ctx{font-size:9.5px;color:var(--muted);margin:0 0 7px}
+.tools{font-size:9.5px;color:var(--muted)}
+.links{display:flex;flex-direction:column;gap:1px;font-size:9.5px;margin-top:4px}
+.links b{font-weight:500;color:var(--muted);display:inline-block;width:46px}
+.media{display:grid;gap:8px;align-content:start;margin:0}
+.media figure{margin:0}
+.frame{background:var(--wash);border-radius:2px;overflow:hidden}
+
+.metrics{border-collapse:collapse;width:100%;font-size:10px;align-self:start}
+.metrics caption{text-align:left;font-size:9.5px;color:var(--muted);padding-bottom:4px}
+.metrics th,.metrics td{padding:4px 0;border-bottom:1px solid var(--line);text-align:left;font-weight:400}
+.metrics td{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.metrics tr.big td{color:var(--accent)}
+.metrics tr.big th{font-weight:600}
+
+.also{list-style:none;margin:0;padding:10px 0 0;display:grid;gap:6px;break-inside:avoid}
+.also li{display:grid;grid-template-columns:1.5in 1fr;gap:14px}
+.also b{font-weight:600}
+.also span{color:var(--muted)}
+
+/* experience + about */
+.cols{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:24px;break-inside:avoid}
+.jobs{list-style:none;margin:0;padding:0}
+.jobs li{padding-block:4px;border-bottom:1px solid var(--line)}
+.jobs .role{font-weight:600}
+.jobs .meta{float:right;font-size:9.5px;color:var(--muted);margin-left:8px}
+.jobs p{margin:2px 0 0;color:var(--muted)}
+.about{padding-top:8px}
+.about .portrait{float:left;position:relative;width:.95in;margin:2px 12px 4px 0}
+.about .portrait img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:3px;border:1px solid var(--line)}
+.about .det{position:absolute;left:21%;right:21%;top:2%;bottom:19%;border:1px dashed var(--accent)}
+.about .det span{position:absolute;left:-1px;top:0;background:var(--accent);color:#fff;font:500 6.5px/1 var(--mono);padding:2px 3px;white-space:nowrap}
+.close{margin-top:12px;padding:10px 12px;background:var(--wash);border-radius:3px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 18px;break-inside:avoid}
+.close p{margin:0;font:600 12px/1.3 var(--display)}
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div>
+    <h1>Christopher Kuizon</h1>
+    <p class="lede">I'm a machine learning engineer. I spend most of my time on the part after training: checking whether a model still works on messy, real inputs.</p>
+    <p class="sub">ML Engineer at TrueCar. CS and Business at USC, continuing into an M.S. in CS. Based in Los Angeles.</p>
+    <ul class="reach">
+      <li><b>Email</b><a href="mailto:christopher.kuizon@gmail.com">christopher.kuizon@gmail.com</a></li>
+      <li><b>LinkedIn</b><a href="https://linkedin.com/in/christopherkuizon">linkedin.com/in/christopherkuizon</a></li>
+      <li><b>GitHub</b><a href="https://github.com/Khriis-K">github.com/Khriis-K</a></li>
+    </ul>
+  </div>
+  <div class="web">
+    <small>Interactive version</small>
+    <a href="https://khriis-k.github.io/">khriis-k.github.io</a>
+    <span>Live demos, video, and the fog slider</span>
+  </div>
+</header>
+
+<figure class="hero">
+  <div class="pair">
+    <figure><img src="assets/print/hero-clear.jpg" alt="Street scene in clear weather with 12 detector boxes."><div class="tag">clear · <b>12</b> detections ≥ 0.25</div></figure>
+    <figure><img src="assets/print/hero-fog.jpg" alt="The same street scene under simulated fog with 6 detector boxes."><div class="tag">fog severity 0.60 · <b>6</b> detections ≥ 0.25</div></figure>
+  </div>
+  <figcaption><b>Same frame, same detector, more fog.</b> Orange boxes are detections; thin white outlines are the labeled objects. Fog and detector from the Edge Perception Reliability Lab. On the website this is a slider. Frame: KITTI (Geiger et al., CVPR 2012), cropped, CC BY-NC-SA 3.0.</figcaption>
+</figure>
+
+<h2>Selected work</h2>
+
+<article class="project">
+  <div>
+    <h3>Edge Perception Reliability Lab</h3>
+    <p class="ctx">Personal project, Sep 2026 to now</p>
+    <p>Does a detector trained on clear roads still work in fog, snow, and at night? This lab runs YOLOX-Nano over 2,000 driving frames in 8 weather and lighting conditions, and compares real bad weather against simulated degradation.</p>
+    <p>On a 300-frame benchmark with 2,946 labeled objects, mAP dropped <span class="num">85%</span> under severe simulated fog. The scoring engine that classifies hits, misses, false alarms, and class mix-ups has 800+ automated tests.</p>
+    <p class="tools">Python, FastAPI, React, TypeScript</p>
+    <div class="links">
+      <a href="https://khriis-k.github.io/Edge-Perception-Reliability-Lab/"><b>Project</b><span class="url">khriis-k.github.io/Edge-Perception-Reliability-Lab</span></a>
+      <a href="https://github.com/Khriis-K/Edge-Perception-Reliability-Lab"><b>Source</b><span class="url">github.com/Khriis-K/Edge-Perception-Reliability-Lab</span></a>
+    </div>
+  </div>
+  <figure class="media">
+    <div class="frame"><img src="assets/print/edge.jpg" alt="Workbench: clean and fogged frames side by side with a match table below."></div>
+    <figcaption>The workbench during a synthetic fog run on 300 frames of city driving in Kraków.</figcaption>
+  </figure>
+</article>
+
+<article class="project">
+  <div>
+    <h3>MyCouncil</h3>
+    <p class="ctx">Personal project, Nov 2025 to now</p>
+    <p>You bring a hard decision and 16 AI counselors with different thinking styles argue it out. You can debate them, refine the dilemma, or talk to one counselor alone.</p>
+    <p>The hard part was memory. Counselors recall what you said in earlier sessions through a retrieval pipeline with BGE embeddings and a reranker. It improved relevant-context recall by <span class="num">168%</span> on 160 held-out tests, measured within a 240-case suite that also tracks ranking quality and latency.</p>
+    <p class="tools">Python, Node.js, React, TypeScript</p>
+    <div class="links">
+      <a href="https://khriis-k.github.io/MyCouncil/"><b>Project</b><span class="url">khriis-k.github.io/MyCouncil</span></a>
+      <a href="https://github.com/Khriis-K/MyCouncil"><b>Source</b><span class="url">github.com/Khriis-K/MyCouncil</span></a>
+    </div>
+  </div>
+  <figure class="media">
+    <div class="frame"><img src="assets/print/council.jpg" alt="MyCouncil: counselors arranged around a dilemma about moving for a job."></div>
+    <figcaption>A council forming around "move for the job, or stay with friends?"</figcaption>
+  </figure>
+</article>
+
+<article class="project">
+  <div>
+    <h3>What caused 20 years of runway incursions</h3>
+    <p class="ctx">USC Aviation Safety &amp; Security Program, Mar to Jun 2025. Team of eight; I built the topic models.</p>
+    <p>NASA's Aviation Safety Reporting System holds pilot and controller narratives of runway incursions going back to 2001. Researchers have mostly coded them by hand. We used NLP to find the recurring causes automatically and to see how they changed over time.</p>
+    <p>I built the LDA and BERTopic pipelines, including expanding aviation abbreviations in the preprocessing step and tuning UMAP and HDBSCAN so the topics separated cleanly. Then I compared topics before and after 2017. We presented the findings to 50+ program representatives.</p>
+    <p class="tools">Python, gensim, BERTopic, sentence-transformers, React, FastAPI</p>
+    <div class="links">
+      <a href="https://khriis-k.github.io/ASRS-Dashboard/"><b>Project</b><span class="url">khriis-k.github.io/ASRS-Dashboard</span></a>
+      <a href="https://github.com/Khriis-K/ASRS-Dashboard"><b>Source</b><span class="url">github.com/Khriis-K/ASRS-Dashboard</span></a>
+    </div>
+  </div>
+  <div class="media">
+    <figure>
+      <div class="frame"><img src="assets/asrs-topic-shift.jpg" alt="Top terms for one topic, 2012 to 2017 versus 2018 to 2025."></div>
+      <figcaption>One topic, two periods. "Line" and "clearance" appear only after 2018, while "hold" and "takeoff" drop out.</figcaption>
+    </figure>
+  </div>
+</article>
+
+<article class="project textonly">
+  <div>
+    <h3>Rebuilding sales attribution at TrueCar</h3>
+    <p class="ctx">Machine Learning Engineer, May 2026 to now. Proprietary, so no code here.</p>
+    <p>TrueCar's legacy sales attribution algorithm used a probabilistic ranking built on a naive Bayes model.</p>
+    <p>I rebuilt the ranking and trained an XGBoost model on 52 million labeled pairs with 10 target-encoded features.</p>
+    <p class="tools">XGBoost, Spark, AWS</p>
+  </div>
+  <table class="metrics">
+    <caption>Change versus the legacy system, at over 95% confidence</caption>
+    <tbody>
+      <tr class="big"><th scope="row">Billable sales in production</th><td>+124%</td></tr>
+      <tr><th scope="row">Monthly match volume</th><td>+196%</td></tr>
+      <tr><th scope="row">Match accuracy</th><td>+19%</td></tr>
+      <tr><th scope="row">Top-1 accuracy vs. naive Bayes</th><td>+59%</td></tr>
+      <tr><th scope="row">AUC-ROC</th><td>+30%</td></tr>
+      <tr><th scope="row">Mean reciprocal rank</th><td>+29%</td></tr>
+    </tbody>
+  </table>
+</article>
+
+<ul class="also">
+  <li><b>TrojanSafe Housing</b><span>A web app that maps historical crime data from USC Department of Public Safety daily incident logs, so students and their families can compare off-campus housing. Private repo, code available on request.</span></li>
+  <li><b>Counsel Reflect</b><span>A tool for reviewing counseling conversations turn by turn, with 81 emotion, safety, and factuality metrics. I helped design the interface and React dashboard, which scored 78.8 and 75.2 on usability against a 68 benchmark. <a class="url" href="https://www.counselreflect.com">counselreflect.com</a></span></li>
+</ul>
+
+<section class="cols">
+  <div>
+    <h2>Experience</h2>
+    <ul class="jobs">
+      <li><span class="meta">May 2026 to now</span><span class="role">Machine Learning Engineer, TrueCar</span></li>
+      <li><span class="meta">May 2025 to Aug 2026</span><span class="role">Full-Stack Software Engineer, Counsel Reflect</span><p>Fine-tuned RoBERTa classifiers to 80 to 92% accuracy across three empathy dimensions.</p></li>
+      <li><span class="meta">Mar to Jun 2025</span><span class="role">Data Analyst, USC Aviation Safety &amp; Security Program</span></li>
+      <li><span class="meta">Jan 2025 to now</span><span class="role">Teaching Assistant, USC machine learning courses</span><p>Four courses, from intro AI to NLP and generative AI. I've mentored 100+ students across 90+ projects.</p></li>
+      <li><span class="meta">Fall 2026</span><span class="role">Social Chair, EscapeSC</span><p>USC's escape room club. We design and build rooms on campus.</p></li>
+      <li><span class="meta">Feb 2024 to Aug 2026</span><span class="role">Co-Chair, Viterbi Undergraduate Student Association</span><p>Represented 50+ engineering clubs to the dean and started the school's first AI ethics panel.</p></li>
+    </ul>
+  </div>
+  <div>
+    <h2>About</h2>
+    <div class="about">
+      <div class="portrait"><img src="assets/headshot.jpg" alt="Portrait of Christopher Kuizon"><div class="det"><span>person 0.99</span></div></div>
+      <p>I'm most interested in ranking, retrieval, and applied ML that has to hold up in the real world, whether it's serving millions of users or running somewhere mistakes are costly.</p>
+      <p>I also TA machine learning courses, so if I'm not building something, I'm probably explaining why someone else's model isn't training. Otherwise I'm with EscapeSC, USC's escape room club, where we build rooms on campus. My friends and I are 17 rooms in.</p>
+    </div>
+  </div>
+</section>
+
+<div class="close">
+  <p>The fastest way to reach me is email: <a class="url" href="mailto:christopher.kuizon@gmail.com">christopher.kuizon@gmail.com</a></p>
+  <p>Full site: <a class="url" href="https://khriis-k.github.io/">khriis-k.github.io</a></p>
+</div>
+
+</body>
+</html>

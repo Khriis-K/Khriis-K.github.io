@@ -70,7 +70,7 @@ h3{font:700 16px/1.15 var(--display);letter-spacing:-.01em;margin:0 0 2px}
 .ctx{font-size:9.5px;color:var(--muted);margin:0 0 7px}
 .tools{font-size:9.5px;color:var(--muted)}
 .links{display:flex;flex-direction:column;gap:1px;font-size:9.5px;margin-top:4px}
-.links b{font-weight:500;color:var(--muted);display:inline-block;width:46px}
+.links b{font-weight:500;color:var(--muted);display:inline-block;width:58px}
 .media{display:grid;gap:8px;align-content:start;margin:0}
 .media figure{margin:0}
 .frame{background:var(--wash);border-radius:2px;overflow:hidden}
@@ -90,7 +90,7 @@ h3{font:700 16px/1.15 var(--display);letter-spacing:-.01em;margin:0 0 2px}
 /* experience + about */
 .cols{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:24px;break-inside:avoid}
 .jobs{list-style:none;margin:0;padding:0}
-.jobs li{padding-block:4px;border-bottom:1px solid var(--line)}
+.jobs li{padding-block:3px;border-bottom:1px solid var(--line)}
 .jobs .role{font-weight:600}
 .jobs .meta{float:right;font-size:9.5px;color:var(--muted);margin-left:8px}
 .jobs p{margin:2px 0 0;color:var(--muted)}
@@ -172,12 +172,12 @@ h3{font:700 16px/1.15 var(--display);letter-spacing:-.01em;margin:0 0 2px}
 <article class="project">
   <div>
     <h3>What caused 20 years of runway incursions</h3>
-    <p class="ctx">USC Aviation Safety &amp; Security Program, Mar to Jun 2025. Team of eight; I built the topic models.</p>
-    <p>NASA's Aviation Safety Reporting System holds pilot and controller narratives of runway incursions going back to 2001. Researchers have mostly coded them by hand. We used NLP to find the recurring causes automatically and to see how they changed over time.</p>
-    <p>I built the LDA and BERTopic pipelines, including expanding aviation abbreviations in the preprocessing step and tuning UMAP and HDBSCAN so the topics separated cleanly. Then I compared topics before and after 2017. We presented the findings to 50+ program representatives.</p>
+    <p class="ctx">Capstone with the USC Aviation Safety &amp; Security Program, Mar to Jun 2025. Our team of eight students was selected by our professor; I built the topic models.</p>
+    <p>NASA's Aviation Safety Reporting System holds pilot and controller narratives of runway incursions going back to 2001. We analyzed 11K+ of these reports. Researchers have mostly coded them by hand. We used NLP to find the recurring causes automatically and to see how they changed over time.</p>
+    <p>I built the LDA and BERTopic pipelines, including expanding aviation abbreviations in the preprocessing step and tuning UMAP and HDBSCAN so the topics separated cleanly. Then I compared topics before and after 2017, which showed a 105% increase in risk on time-pressure incidents. We presented the findings to 50+ program representatives.</p>
     <p class="tools">Python, gensim, BERTopic, sentence-transformers, React, FastAPI</p>
     <div class="links">
-      <a href="https://khriis-k.github.io/ASRS-Dashboard/"><b>Project</b><span class="url">khriis-k.github.io/ASRS-Dashboard</span></a>
+      <a href="https://khriis-k.github.io/ASRS-Dashboard/"><b>Dashboard</b><span class="url">khriis-k.github.io/ASRS-Dashboard</span></a>
       <a href="https://github.com/Khriis-K/ASRS-Dashboard"><b>Source</b><span class="url">github.com/Khriis-K/ASRS-Dashboard</span></a>
     </div>
   </div>

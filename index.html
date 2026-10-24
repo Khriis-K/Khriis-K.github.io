@@ -196,6 +196,21 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 20px;pa
 
       <article class="project">
         <div class="text">
+          <h3>Tether</h3>
+          <p class="ctx">Personal project, Oct 2026 to now</p>
+          <p>A real-time multi-object tracker in C++ that keeps a steady ID on each person or drone, even when it's briefly hidden or the detector misses it. YOLO26n finds objects in each frame; a hand-written Kalman filter, staged Hungarian matching, and a track lifecycle link them over time.</p>
+          <p>I prototyped the tracker in Python, then ported it to C++ with identical output on 462 real detection files, and moved it onto the GPU with TensorRT, a custom CUDA kernel, and a parallel pipeline. It runs at <span class="num">195</span> FPS on a laptop against a 120 FPS goal, and matches ByteTrack on MOT17. Not every goal was met: holding a drone's ID through dropouts fell 5.3 points short, and the scorecard says so.</p>
+          <p class="tools">C++, CUDA, TensorRT, Python, YOLO</p>
+          <div class="links"><a href="https://khriis-k.github.io/Tether/" target="_blank" rel="noopener">Project page</a><a href="https://github.com/Khriis-K/Tether" target="_blank" rel="noopener">Source</a></div>
+        </div>
+        <figure class="media">
+          <div class="frame"><video class="autoplay" src="assets/tether-mot17.mp4" poster="assets/tether-mot17-poster.jpg" width="960" height="540" muted loop playsinline preload="metadata" aria-label="Tether tracking pedestrians on a street, each with a coloured box, an ID, and a trail."></video></div>
+          <figcaption>Tracking pedestrians on MOT17-09. Dashed orange boxes are people the detector lost, which the tracker is still searching for. Video: <a href="https://motchallenge.net/data/MOT17/" target="_blank" rel="noopener">MOT17</a>, <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank" rel="noopener">CC BY-NC-SA 3.0</a>.</figcaption>
+        </figure>
+      </article>
+
+      <article class="project flip">
+        <div class="text">
           <h3>Edge Perception Reliability Lab</h3>
           <p class="ctx">Personal project, Sep 2026 to now</p>
           <p>Does a detector trained on clear roads still work in fog, snow, and at night? This lab runs YOLOX-Nano over 2,000 driving frames in 8 weather and lighting conditions, and compares real bad weather against simulated degradation.</p>
@@ -209,7 +224,7 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 20px;pa
         </figure>
       </article>
 
-      <article class="project flip">
+      <article class="project">
         <div class="text">
           <h3>MyCouncil</h3>
           <p class="ctx">Personal project, Nov 2025 to now</p>
@@ -224,7 +239,7 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 20px;pa
         </figure>
       </article>
 
-      <article class="project">
+      <article class="project flip">
         <div class="text">
           <h3>What caused 20 years of runway incursions</h3>
           <p class="ctx">Capstone with the USC Aviation Safety &amp; Security Program, Mar to Jun 2025. Our team of eight students was selected by our professor; I built the topic models.</p>
@@ -235,7 +250,7 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 20px;pa
         </div>
         <div class="media">
           <figure>
-            <div class="frame"><video id="lda-video" src="assets/asrs-lda.mp4" poster="assets/asrs-lda-poster.jpg" width="1100" height="542" muted loop playsinline preload="metadata" aria-label="Clicking through LDA topics on an intertopic distance map."></video></div>
+            <div class="frame"><video class="autoplay" src="assets/asrs-lda.mp4" poster="assets/asrs-lda-poster.jpg" width="1100" height="542" muted loop playsinline preload="metadata" aria-label="Clicking through LDA topics on an intertopic distance map."></video></div>
             <figcaption>LDA topics for 2012 to 2017. Selecting a topic shows its most relevant terms (red) against overall frequency (blue).</figcaption>
           </figure>
           <figure>
@@ -404,14 +419,13 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 20px;pa
   }
 })();
 (function(){
-  var v=document.getElementById("lda-video");
   var still=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if(v){
+  document.querySelectorAll("video.autoplay").forEach(function(v){
     if(still){v.controls=true;}
     else if("IntersectionObserver" in window){
       new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var p=v.play();if(p&&p.catch)p.catch(function(){v.controls=true;});}else{v.pause();}});},{threshold:.3}).observe(v);
     }else{v.controls=true;}
-  }
+  });
   document.querySelectorAll("a[data-yt]").forEach(function(a){
     a.addEventListener("click",function(e){
       e.preventDefault();

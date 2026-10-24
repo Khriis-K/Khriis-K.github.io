@@ -23,7 +23,7 @@ PDF = ROOT / "Christopher-Kuizon-Portfolio.pdf"
 SCALE = 2  # draw the hero at 2x so boxes stay crisp in print
 FOG_STEP = 12  # severity 0.60, the step the site's caption quotes
 EDGE_FRAME = 17  # side-by-side clean vs degraded with the match table
-COUNCIL_FRAME = 48  # counselors arranged around the dilemma
+COUNCIL_FRAME = 92  # counselors arranged around the dilemma
 
 ORANGE = (240, 131, 74)
 

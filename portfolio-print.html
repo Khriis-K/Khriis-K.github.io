@@ -81,16 +81,32 @@ h3{font:700 16px/1.15 var(--display);letter-spacing:-.01em;margin:0 0 2px}
 .metrics td{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
 .metrics tr.big td{color:var(--accent)}
 .metrics tr.big th{font-weight:600}
+.goals td.met,.goals td.miss{width:44px;font-family:var(--sans);font-size:9px;text-transform:uppercase;letter-spacing:.05em}
+.goals td.met{color:var(--muted)}
+.goals td.miss{color:var(--accent);font-weight:600}
+.goals th{padding-right:8px}
+.goals td{white-space:nowrap}
 
-.also{list-style:none;margin:0;padding:10px 0 0;display:grid;gap:6px;break-inside:avoid}
+.also{list-style:none;margin:0;padding:14px 0 4px;display:grid;gap:12px;break-inside:avoid}
 .also li{display:grid;grid-template-columns:1.5in 1fr;gap:14px}
+.also li.with-shot{grid-template-columns:1.5in 1fr 2.1in}
+.also li.with-shot img{border-radius:2px;border:1px solid var(--line)}
 .also b{font-weight:600}
 .also span{color:var(--muted)}
 
 /* experience + about */
+.aside{margin:12px 0 0}
+.edu .school{margin:8px 0 3px}
+.edu .meta{float:right;font-size:9.5px;color:var(--muted);margin-left:8px}
+.edu b{font-weight:600}
+.edu p{color:var(--muted)}.edu .school{color:var(--ink)}
+.skills{display:grid;grid-template-columns:62px 1fr;gap:3px 10px;margin:8px 0 0}
+.skills dt{font-weight:500;color:var(--muted)}
+.skills dd{margin:0}
 .cols{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:24px;break-inside:avoid}
+.cols h2{margin-top:20px}
 .jobs{list-style:none;margin:0;padding:0}
-.jobs li{padding-block:3px;border-bottom:1px solid var(--line)}
+.jobs li{padding-block:6px;border-bottom:1px solid var(--line)}
 .jobs .role{font-weight:600}
 .jobs .meta{float:right;font-size:9.5px;color:var(--muted);margin-left:8px}
 .jobs p{margin:2px 0 0;color:var(--muted)}
@@ -99,7 +115,7 @@ h3{font:700 16px/1.15 var(--display);letter-spacing:-.01em;margin:0 0 2px}
 .about .portrait img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:3px;border:1px solid var(--line)}
 .about .det{position:absolute;left:21%;right:21%;top:2%;bottom:19%;border:1px dashed var(--accent)}
 .about .det span{position:absolute;left:-1px;top:0;background:var(--accent);color:#fff;font:500 6.5px/1 var(--mono);padding:2px 3px;white-space:nowrap}
-.close{margin-top:12px;padding:10px 12px;background:var(--wash);border-radius:3px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 18px;break-inside:avoid}
+.close{margin-top:18px;padding:10px 12px;background:var(--wash);border-radius:3px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 18px;break-inside:avoid}
 .close p{margin:0;font:600 12px/1.3 var(--display)}
 </style>
 </head>
@@ -132,6 +148,40 @@ h3{font:700 16px/1.15 var(--display);letter-spacing:-.01em;margin:0 0 2px}
 </figure>
 
 <h2>Selected work</h2>
+
+<article class="project">
+  <div>
+    <h3>Tether</h3>
+    <p class="ctx">Personal project, Oct 2026 to now</p>
+    <p>A real-time multi-object tracker in C++ that keeps a steady ID on each person or drone, even when it's briefly hidden or the detector misses it. YOLO26n finds objects in each frame; a hand-written Kalman filter, staged Hungarian matching, and a track lifecycle link them over time.</p>
+    <p>I prototyped the tracker in Python, then ported it to C++ with identical output on 462 real detection files, and moved it onto the GPU with TensorRT, a custom CUDA kernel, and a parallel pipeline. It runs at <span class="num">195</span> FPS on a laptop against a 120 FPS goal, and matches ByteTrack on MOT17. Not every goal was met: holding a drone's ID through dropouts fell 5.3 points short, and the scorecard says so.</p>
+    <p class="tools">C++, CUDA, TensorRT, Python, YOLO</p>
+    <div class="links">
+      <a href="https://khriis-k.github.io/Tether/"><b>Project</b><span class="url">khriis-k.github.io/Tether</span></a>
+      <a href="https://github.com/Khriis-K/Tether"><b>Source</b><span class="url">github.com/Khriis-K/Tether</span></a>
+    </div>
+    <figure class="aside">
+      <div class="frame"><img src="assets/print/tether-drone.jpg" alt="Tether tracking a small drone against the sky."></div>
+      <figcaption>The fine-tuned drone model on an Anti-UAV test clip. Video: Anti-UAV, MIT License.</figcaption>
+    </figure>
+  </div>
+  <div class="media">
+    <figure>
+      <div class="frame"><img src="assets/print/tether-hud.jpg" alt="Tether's HUD tracking pedestrians on a street, each with a coloured box, an ID, and a trail."></div>
+      <figcaption>Tracking pedestrians on MOT17-09. Dashed orange boxes are people the detector lost, which the tracker is still searching for. Video: MOT17, CC BY-NC-SA 3.0.</figcaption>
+    </figure>
+    <table class="metrics goals">
+      <caption>Goals set before measuring, on one laptop GPU</caption>
+      <tbody>
+        <tr><th scope="row">120+ FPS on a video file</th><td>195 FPS</td><td class="met">met</td></tr>
+        <tr><th scope="row">Worst 1% frame time under 16 ms</th><td>6.5 ms</td><td class="met">met</td></tr>
+        <tr><th scope="row">Match ByteTrack on MOT17 (HOTA, IDF1, ID switches)</th><td>HOTA 41.5 vs 40.9</td><td class="met">met</td></tr>
+        <tr><th scope="row">C++ tracking step 10&times;+ faster than Python</th><td>14.1&times;</td><td class="met">met</td></tr>
+        <tr><th scope="row">Keep a drone's ID with 20% of detections deleted</th><td>84.0% vs 89.3% goal</td><td class="miss">missed</td></tr>
+      </tbody>
+    </table>
+  </div>
+</article>
 
 <article class="project">
   <div>
@@ -183,6 +233,10 @@ h3{font:700 16px/1.15 var(--display);letter-spacing:-.01em;margin:0 0 2px}
   </div>
   <div class="media">
     <figure>
+      <div class="frame"><img src="assets/asrs-lda-poster.jpg" alt="Intertopic distance map of LDA topics with the most relevant terms for one topic."></div>
+      <figcaption>LDA topics for 2012 to 2017. Selecting a topic shows its most relevant terms (red) against overall frequency (blue). Interactive on the dashboard.</figcaption>
+    </figure>
+    <figure>
       <div class="frame"><img src="assets/asrs-topic-shift.jpg" alt="Top terms for one topic, 2012 to 2017 versus 2018 to 2025."></div>
       <figcaption>One topic, two periods. "Line" and "clearance" appear only after 2018, while "hold" and "takeoff" drop out.</figcaption>
     </figure>
@@ -212,17 +266,33 @@ h3{font:700 16px/1.15 var(--display);letter-spacing:-.01em;margin:0 0 2px}
 
 <ul class="also">
   <li><b>TrojanSafe Housing</b><span>A web app that maps historical crime data from USC Department of Public Safety daily incident logs, so students and their families can compare off-campus housing. Private repo, code available on request.</span></li>
-  <li><b>Counsel Reflect</b><span>A tool for reviewing counseling conversations turn by turn, with 81 emotion, safety, and factuality metrics. I helped design the interface and React dashboard, which scored 78.8 and 75.2 on usability against a 68 benchmark. <a class="url" href="https://www.counselreflect.com">counselreflect.com</a></span></li>
+  <li class="with-shot"><b>Counsel Reflect</b><span>A tool for reviewing counseling conversations turn by turn, with 81 emotion, safety, and factuality metrics. I helped design the interface and React dashboard, which scored 78.8 and 75.2 on usability against a 68 benchmark. <a class="url" href="https://www.counselreflect.com">counselreflect.com</a></span><img src="assets/counsel-reflect.jpg" alt="Counsel Reflect's dashboard for reviewing a counseling session."></li>
 </ul>
+
+<section class="cols edu">
+  <div>
+    <h2>Education</h2>
+    <p class="school"><span class="meta">Expected May 2028</span><b>University of Southern California</b>, Los Angeles</p>
+    <p>B.S. Computer Science and Business Administration. Progressive M.S. in Computer Science, minor in Artificial Intelligence Applications. GPA 3.83.</p>
+  </div>
+  <div>
+    <h2>Skills</h2>
+    <dl class="skills">
+      <dt>Languages</dt><dd>Python, C++, Java, Kotlin, SQL, JavaScript, HTML, CSS, PHP</dd>
+      <dt>ML</dt><dd>PyTorch, TensorFlow, Keras, Hugging Face, XGBoost, spaCy, NLTK</dd>
+      <dt>Tools</dt><dd>CUDA, TensorRT, Docker, Git, Linux, Spark, Airflow, AWS, Slurm, React, FastAPI</dd>
+    </dl>
+  </div>
+</section>
 
 <section class="cols">
   <div>
     <h2>Experience</h2>
     <ul class="jobs">
-      <li><span class="meta">May 2026 to now</span><span class="role">Machine Learning Engineer, TrueCar</span></li>
+      <li><span class="meta">May 2026 to now</span><span class="role">Machine Learning Engineer, TrueCar</span><p>Rebuilt sales attribution ranking, and wrote an Airflow DAG that automates a 7-day manual refresh of its probability tables.</p></li>
       <li><span class="meta">May 2025 to Aug 2026</span><span class="role">Full-Stack Software Engineer, Counsel Reflect</span><p>Fine-tuned RoBERTa classifiers to 80 to 92% accuracy across three empathy dimensions.</p></li>
       <li><span class="meta">Mar to Jun 2025</span><span class="role">Data Analyst, USC Aviation Safety &amp; Security Program</span></li>
-      <li><span class="meta">Jan 2025 to now</span><span class="role">Teaching Assistant, USC machine learning courses</span><p>Four courses, from intro AI to NLP and generative AI. I've mentored 100+ students across 90+ projects.</p></li>
+      <li><span class="meta">Jan 2025 to now</span><span class="role">Teaching Assistant, USC machine learning courses</span><p>Four courses, from intro AI to NLP and generative AI: TAC 259, 359, 449, and 459. I've mentored 100+ students across 90+ projects.</p></li>
       <li><span class="meta">Fall 2026</span><span class="role">Social Chair, EscapeSC</span><p>USC's escape room club. We design and build rooms on campus.</p></li>
       <li><span class="meta">Feb 2024 to Aug 2026</span><span class="role">Co-Chair, Viterbi Undergraduate Student Association</span><p>Represented 50+ engineering clubs to the dean and started the school's first AI ethics panel.</p></li>
     </ul>
